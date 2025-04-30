@@ -10,4 +10,5 @@
     <string name="synopsis">Synopsis</string>
     <string name="back">Back</string>
     <string name="save">Save</string>
+    <string name="edit">Edit Book</string>
 </resources>

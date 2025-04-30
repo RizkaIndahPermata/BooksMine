@@ -35,9 +35,11 @@ import androidx.navigation.compose.rememberNavController
 import com.rizkaindah0043.booksmine.R
 import com.rizkaindah0043.booksmine.ui.theme.BooksMineTheme
 
+const val KEY_ID_BOOK = "idBook"
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen(navController: NavHostController) {
+fun DetailScreen(navController: NavHostController, id: Long? = null) {
     var title by remember { mutableStateOf("") }
     var writer by remember { mutableStateOf("") }
     var publishDate by remember { mutableStateOf("") }
@@ -56,7 +58,10 @@ fun DetailScreen(navController: NavHostController) {
                     }
                 },
                 title = {
+                    if (id == null)
                     Text(text = stringResource(id = R.string.add_book))
+                    else
+                        Text(text = stringResource(id = R.string.edit))
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,

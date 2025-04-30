@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">BooksMine</string>
     <string name="list_kosong">Data is Empty</string>
-    <string name="x_diklik">%1$s diklik</string>
+    <string name="x_clicked">%1$s clicked</string>
+    <string name="add_book">%Add_Book</string>
+    <string name="can_not">Can\'t add books yet</string>
 </resources>

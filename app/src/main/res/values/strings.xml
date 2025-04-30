@@ -8,4 +8,6 @@
     <string name="writer">Writer</string>
     <string name="publish_date">Publish Date</string>
     <string name="synopsis">Synopsis</string>
+    <string name="back">Back</string>
+    <string name="save">Save</string>
 </resources>

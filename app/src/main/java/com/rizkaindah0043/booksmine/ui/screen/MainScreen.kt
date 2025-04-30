@@ -31,14 +31,17 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.rizkaindah0043.booksmine.R
 import com.rizkaindah0043.booksmine.model.Book
+import com.rizkaindah0043.booksmine.navigation.Screen
 import com.rizkaindah0043.booksmine.ui.theme.BooksMineTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
-    val context = LocalContext.current
+fun MainScreen(navController: NavHostController) {
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -54,7 +57,7 @@ fun MainScreen() {
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    Toast.makeText(context, R.string.can_not, Toast.LENGTH_SHORT).show()
+                    navController.navigate(Screen.FormBaru.route)
                 }
             ) {
                 Icon(
@@ -134,6 +137,6 @@ fun ListItem(book: Book, onClick: () -> Unit) {
 @Composable
 fun MainScreenPreview() {
     BooksMineTheme {
-        MainScreen()
+        MainScreen(rememberNavController())
     }
 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BooksMine</string>
+    <string name="list_kosong">Data is Empty</string>
 </resources>

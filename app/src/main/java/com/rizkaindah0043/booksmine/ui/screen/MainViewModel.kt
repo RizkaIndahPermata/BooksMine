@@ -56,4 +56,7 @@ class MainViewModel : ViewModel() {
             "A powerful novel about racial injustice and moral growth in the American South."
         )
     )
+    fun getBook(id: Long): Book? {
+        return data.find { it.id == id }
+    }
 }

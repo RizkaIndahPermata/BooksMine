@@ -81,7 +81,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ){
-            Text(text = stringResource(id = R.string.list_kosong))
+            Text(text = stringResource(id = R.string.empty_list))
         }
     } else{
     LazyColumn (

@@ -21,7 +21,19 @@ class DetailViewModel(private val dao: BookDao) : ViewModel() {
             dao.insert(book)
         }
     }
-    fun getBook(id: Long): Book? {
-        return null
+    suspend fun getBook(id: Long): Book? {
+        return dao.getBookById(id)
+    }
+    fun update(id: Long, title: String, writer: String, publishDate: String, synopsis: String) {
+        val book = Book(
+            id = id,
+            title = title,
+            writer = writer,
+            publishDate = publishDate,
+            synopsis = synopsis
+        )
+        viewModelScope.launch(Dispatchers.IO) {
+            dao.update(book)
+        }
     }
 }

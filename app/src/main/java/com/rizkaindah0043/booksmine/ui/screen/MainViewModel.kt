@@ -15,7 +15,4 @@ class MainViewModel(dao: BookDao) : ViewModel() {
         started = SharingStarted.WhileSubscribed(),
         initialValue = emptyList()
     )
-    fun getBook(id: Long): Book? {
-        return data.value.find { it.id == id }
-    }
 }

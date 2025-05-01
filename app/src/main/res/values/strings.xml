@@ -11,4 +11,5 @@
     <string name="back">Back</string>
     <string name="save">Save</string>
     <string name="edit">Edit Book</string>
+    <string name="invalid">Book data cannot be empty</string>
 </resources>

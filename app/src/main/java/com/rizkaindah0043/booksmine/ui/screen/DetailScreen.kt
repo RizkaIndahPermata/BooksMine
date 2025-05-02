@@ -1,5 +1,6 @@
 package com.rizkaindah0043.booksmine.ui.screen
 
+import android.app.DatePickerDialog
 import android.content.res.Configuration
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -10,25 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Check
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -42,6 +29,9 @@ import androidx.navigation.compose.rememberNavController
 import com.rizkaindah0043.booksmine.R
 import com.rizkaindah0043.booksmine.ui.theme.BooksMineTheme
 import com.rizkaindah0043.booksmine.util.ViewModelFactory
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 const val KEY_ID_BOOK = "idBook"
 
@@ -57,6 +47,30 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
     var publishDate by remember { mutableStateOf("") }
     var synopsis by remember { mutableStateOf("") }
 
+
+    val calendar = Calendar.getInstance()
+    val datePickerDialog = DatePickerDialog(
+        context,
+        { _, year, month, dayOfMonth ->
+            val selectedDate = Calendar.getInstance()
+            selectedDate.set(year, month, dayOfMonth)
+
+            val locale = Locale.getDefault()
+            val formatter = if (locale.language == "in") {
+                SimpleDateFormat("dd-MMMM-yyyy", locale)
+            } else {
+                SimpleDateFormat("yyyy-MMMM-dd", locale)
+            }
+
+            publishDate = formatter.format(selectedDate.time)
+        },
+        calendar.get(Calendar.YEAR),
+        calendar.get(Calendar.MONTH),
+        calendar.get(Calendar.DAY_OF_MONTH)
+    ).apply {
+        datePicker.maxDate = calendar.timeInMillis
+    }
+
     LaunchedEffect(Unit) {
         if (id == null) return@LaunchedEffect
         val data = viewModel.getBook(id) ?: return@LaunchedEffect
@@ -70,7 +84,7 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
         topBar = {
             TopAppBar(
                 navigationIcon = {
-                    IconButton(onClick = {navController.popBackStack()}) {
+                    IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.back),
@@ -80,7 +94,7 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
                 },
                 title = {
                     if (id == null)
-                    Text(text = stringResource(id = R.string.add_book))
+                        Text(text = stringResource(id = R.string.add_book))
                     else
                         Text(text = stringResource(id = R.string.edit))
                 },
@@ -99,7 +113,8 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
                         } else {
                             viewModel.update(id, title, writer, publishDate, synopsis)
                         }
-                        navController.popBackStack()}) {
+                        navController.popBackStack()
+                    }) {
                         Icon(
                             imageVector = Icons.Outlined.Check,
                             contentDescription = stringResource(R.string.save),
@@ -125,6 +140,7 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
             onPublishDateChange = { publishDate = it },
             synopsis = synopsis,
             onSynopsisChange = { synopsis = it },
+            onPickDate = { datePickerDialog.show() },
             modifier = Modifier.padding(padding)
         )
     }
@@ -163,15 +179,18 @@ fun FormBook(
     writer: String, onWriterChange: (String) -> Unit,
     publishDate: String, onPublishDateChange: (String) -> Unit,
     synopsis: String, onSynopsisChange: (String) -> Unit,
+    onPickDate: () -> Unit,
     modifier: Modifier
 ) {
     Column(
-        modifier = modifier.fillMaxSize().padding(16.dp),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         OutlinedTextField(
             value = title,
-            onValueChange = {onTitleChange(it)},
+            onValueChange = { onTitleChange(it) },
             label = { Text(text = stringResource(R.string.title)) },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
@@ -182,7 +201,7 @@ fun FormBook(
         )
         OutlinedTextField(
             value = writer,
-            onValueChange = {onWriterChange(it)},
+            onValueChange = { onWriterChange(it) },
             label = { Text(text = stringResource(R.string.writer)) },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
@@ -193,18 +212,23 @@ fun FormBook(
         )
         OutlinedTextField(
             value = publishDate,
-            onValueChange = {onPublishDateChange(it)},
+            onValueChange = { onPublishDateChange(it) },
             label = { Text(text = stringResource(R.string.publish_date)) },
             singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                capitalization = KeyboardCapitalization.Words,
-                imeAction = ImeAction.Next
-            ),
+            trailingIcon = {
+                IconButton(onClick = onPickDate) {
+                    Icon(
+                        imageVector = Icons.Filled.DateRange,
+                        contentDescription = "Pick Date"
+                    )
+                }
+            },
+            readOnly = true,
             modifier = Modifier.fillMaxWidth()
         )
         OutlinedTextField(
             value = synopsis,
-            onValueChange = {onSynopsisChange(it)},
+            onValueChange = { onSynopsisChange(it) },
             label = { Text(text = stringResource(R.string.synopsis)) },
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Sentences

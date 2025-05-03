@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BooksMine</string>
+    <string name="empty_list">Data Kosong</string>
+    <string name="x_clicked">%1$s Diklik</string>
+    <string name="add_book">Tambah Buku</string>
+    <string name="can_not">Belum Bisa Menambahkan Buku</string>
+    <string name="title">Judul Buku</string>
+    <string name="writer">Penulis</string>
+    <string name="publish_date">Tanggal Terbit</string>
+    <string name="synopsis">Sinopsis</string>
+    <string name="back">Kembali</string>
+    <string name="save">Simpan</string>
+    <string name="edit">Edit Buku</string>
+    <string name="invalid">Data Buku Tidak Boleh Kosong</string>
+    <string name="other">Opsi Lainnya</string>
+    <string name="delete">Hapus Buku</string>
+    <string name="delete_message">Hapus Buku ini</string>
+    <string name="delete_button">Hapus</string>
+    <string name="cancel_button">Batal</string>
+    <string name="list">Tampilan List</string>
+    <string name="grid">Tampilan Grid</string>
+    <string name="dialog_recycle">Pulihkan atau Hapus Buku</string>
+    <string name="undo_button">Pulihkan</string>
+    <string name="recycle_bin">Keranjang Sampah</string>
+    <string name="trash">Sampah</string>
+    <string name="recycle_toast">Dipindahkan ke Keranjang Sampah</string>
+</resources>

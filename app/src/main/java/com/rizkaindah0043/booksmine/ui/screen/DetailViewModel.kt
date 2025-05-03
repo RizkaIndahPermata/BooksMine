@@ -36,9 +36,9 @@ class DetailViewModel(private val dao: BookDao) : ViewModel() {
             dao.update(book)
         }
     }
-    fun delete(id: Long) {
+    fun softDelete(id: Long) {
         viewModelScope.launch(Dispatchers.IO) {
-            dao.deleteById(id)
+            dao.softDeleteById(id)
         }
     }
 }

@@ -10,5 +10,6 @@ data class Book(
     val title: String,
     val writer: String,
     val publishDate: String,
-    val synopsis: String
+    val synopsis: String,
+    val isDeleted: Boolean = false
 )

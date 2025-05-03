@@ -10,6 +10,7 @@ import androidx.navigation.navArgument
 import com.rizkaindah0043.booksmine.ui.screen.DetailScreen
 import com.rizkaindah0043.booksmine.ui.screen.KEY_ID_BOOK
 import com.rizkaindah0043.booksmine.ui.screen.MainScreen
+import com.rizkaindah0043.booksmine.ui.screen.RecycleScreen
 
 @Composable
 fun SetupNavGraph(navController: NavHostController = rememberNavController()) {
@@ -31,6 +32,9 @@ fun SetupNavGraph(navController: NavHostController = rememberNavController()) {
         ) { navBackStackEntry ->
             val id = navBackStackEntry.arguments?.getLong(KEY_ID_BOOK)
             DetailScreen(navController, id)
+        }
+        composable(route = Screen.Recycle.route) {
+            RecycleScreen(navController)
         }
     }
 }

@@ -12,23 +12,26 @@ import com.rizkaindah0043.booksmine.ui.theme.BooksMineTheme
 
 @Composable
 fun DisplayAlertDialog(
+    openDialog: Boolean,
     onDismissRequest: () -> Unit,
     onConfirmation: () ->Unit
 ){
-    AlertDialog(
-        text = { Text(text = stringResource(R.string.delete_message)) },
-        confirmButton = {
-            TextButton(onClick = { onConfirmation() }) {
-                Text(text = stringResource(R.string.delete_button))
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = {onDismissRequest()}) {
-                Text(text = stringResource(R.string.cancel_button))
-            }
-        },
-        onDismissRequest = { onDismissRequest() }
-    )
+    if (openDialog) {
+        AlertDialog(
+            text = { Text(text = stringResource(R.string.delete_message)) },
+            confirmButton = {
+                TextButton(onClick = { onConfirmation() }) {
+                    Text(text = stringResource(R.string.delete_button))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { onDismissRequest() }) {
+                    Text(text = stringResource(R.string.cancel_button))
+                }
+            },
+            onDismissRequest = { onDismissRequest() }
+        )
+    }
 }
 
 @Preview(showBackground = true)
@@ -37,6 +40,7 @@ fun DisplayAlertDialog(
 fun DialogPreview() {
     BooksMineTheme {
         DisplayAlertDialog(
+            openDialog = true,
             onDismissRequest = {},
             onConfirmation = {}
         )

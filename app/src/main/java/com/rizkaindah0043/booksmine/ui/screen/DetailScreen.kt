@@ -27,6 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.rizkaindah0043.booksmine.R
+import com.rizkaindah0043.booksmine.navigation.Screen
 import com.rizkaindah0043.booksmine.ui.theme.BooksMineTheme
 import com.rizkaindah0043.booksmine.util.ViewModelFactory
 import java.text.SimpleDateFormat
@@ -122,9 +123,16 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
                         )
                     }
                     if (id != null) {
-                        DeleteAction {
-                            showDialog = true
-                        }
+                        DeleteAction { showDialog = true }
+                        DisplayAlertDialog(
+                            openDialog = showDialog,
+                            onDismissRequest = { showDialog = false },
+                            onConfirmation = {
+                                showDialog = false
+                                viewModel.softDelete(id)
+                                navController.navigate(Screen.Home.route)
+                            }
+                        )
                     }
                 }
             )
@@ -142,14 +150,6 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
             onPickDate = { datePickerDialog.show() },
             modifier = Modifier.padding(padding)
         )
-        if (id != null && showDialog) {
-            DisplayAlertDialog(
-                onDismissRequest = { showDialog = false }) {
-                showDialog = false
-                viewModel.delete(id)
-                navController.popBackStack()
-            }
-        }
     }
 }
 

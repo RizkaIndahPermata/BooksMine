@@ -47,7 +47,6 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
     var writer by remember { mutableStateOf("") }
     var publishDate by remember { mutableStateOf("") }
     var synopsis by remember { mutableStateOf("") }
-    var showDialog by remember { mutableStateOf(false) }
 
     val calendar = Calendar.getInstance()
     val datePickerDialog = DatePickerDialog(
@@ -123,16 +122,11 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
                         )
                     }
                     if (id != null) {
-                        DeleteAction { showDialog = true }
-                        DisplayAlertDialog(
-                            openDialog = showDialog,
-                            onDismissRequest = { showDialog = false },
-                            onConfirmation = {
-                                showDialog = false
-                                viewModel.softDelete(id)
-                                navController.navigate(Screen.Home.route)
-                            }
-                        )
+                        DeleteAction {
+                            viewModel.softDelete(id)
+                            Toast.makeText(context, context.getString(R.string.recycle_toast), Toast.LENGTH_SHORT).show()
+                            navController.navigate(Screen.Home.route)
+                        }
                     }
                 }
             )

@@ -1,6 +1,7 @@
 package com.rizkaindah0043.booksmine.ui.screen
 
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -14,22 +15,28 @@ import com.rizkaindah0043.booksmine.ui.theme.BooksMineTheme
 fun DisplayAlertDialog(
     openDialog: Boolean,
     onDismissRequest: () -> Unit,
-    onConfirmation: () ->Unit
+    onUndo: () -> Unit,
+    onDelete: () -> Unit
 ){
     if (openDialog) {
         AlertDialog(
-            text = { Text(text = stringResource(R.string.delete_message)) },
+            text = { Text(text = stringResource(R.string.dialog_recycle)) },
             confirmButton = {
-                TextButton(onClick = { onConfirmation() }) {
-                    Text(text = stringResource(R.string.delete_button))
+                Row {
+                    TextButton(onClick = { onUndo() }) {
+                        Text(text = stringResource(R.string.undo_button))
+                    }
+                    TextButton(onClick = { onDelete() }) {
+                        Text(text = stringResource(R.string.delete_button))
+                    }
                 }
             },
             dismissButton = {
-                TextButton(onClick = { onDismissRequest() }) {
+                TextButton(onClick = onDismissRequest) {
                     Text(text = stringResource(R.string.cancel_button))
                 }
             },
-            onDismissRequest = { onDismissRequest() }
+            onDismissRequest = onDismissRequest
         )
     }
 }
@@ -42,7 +49,8 @@ fun DialogPreview() {
         DisplayAlertDialog(
             openDialog = true,
             onDismissRequest = {},
-            onConfirmation = {}
+            onUndo = {},
+            onDelete = {}
         )
     }
 }

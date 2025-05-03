@@ -20,7 +20,8 @@
     <string name="list">List View</string>
     <string name="grid">Grid View</string>
     <string name="dialog_recycle">Recover or Delete this Book</string>
-    <string name="undo_button">Undo</string>
+    <string name="undo_button">Recover</string>
     <string name="recycle_bin">Recycle Bin</string>
     <string name="trash">Trash</string>
+    <string name="recycle_toast">Moved to recycle bin</string>
 </resources>
